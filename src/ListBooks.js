@@ -43,7 +43,7 @@ export default class ListBooks extends Component {
                     key={book.id} 
                     book={book} 
                     shelves={this.state.shelves}
-                    onUpdateShelf={onUpdateShelf}
+                    onUpdateBookShelf={onUpdateShelf}
                   />
                 ))}
                 </BookShelf>

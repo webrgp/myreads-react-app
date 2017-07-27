@@ -6,10 +6,10 @@ function Book(props) {
   Book.propTypes= {
     book: PropTypes.object.isRequired,
     shelves: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    onUpdateBookShelf: PropTypes.func.isRequired
   }
     
-  const { book, shelves, onUpdateShelf } = props;
+  const { book, shelves, onUpdateBookShelf } = props;
 
   return (
     <li>
@@ -17,7 +17,7 @@ function Book(props) {
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
           <div className="book-shelf-changer">
-            <select value={book.shelf} onChange={ event => onUpdateShelf(book, event.target.value)}>
+            <select value={book.shelf} onChange={ event => onUpdateBookShelf(book, event.target.value)}>
               <option value="none" disabled>Move to...</option>
               {shelves.map( shelf => (
                 <option 
