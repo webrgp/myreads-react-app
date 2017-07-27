@@ -181,7 +181,7 @@ class BooksApp extends React.Component {
           </div>
         )}/>
 
-        <Route path="/create" render={({history}) => (
+        <Route path="/search" render={({history}) => (
             <div className="search-books">
               <div className="search-books-bar">
                 <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
