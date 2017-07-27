@@ -7,11 +7,11 @@ function BookShelf(props) {
   BookShelf.propTypes = {
     name: PropTypes.string.isRequired,
     books: PropTypes.array.isRequired,
-    getShelfOptions: PropTypes.func.isRequired,
+    bookshelves: PropTypes.array.isRequired,
     onUpdateShelf: PropTypes.func.isRequired
   }
 
-  const { books, name, onUpdateShelf, getShelfOptions } = props;
+  const { books, name, onUpdateShelf, bookshelves } = props;
 
   return (
     <div className="bookshelf">
@@ -23,7 +23,7 @@ function BookShelf(props) {
               key={book.id} 
               book={book} 
               onUpdateBook={onUpdateShelf}
-              getShelfOptions={getShelfOptions}
+              bookshelves={bookshelves}
             />
           ))}
         </ol>

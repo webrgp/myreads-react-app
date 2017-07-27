@@ -10,26 +10,35 @@ import SearchBooks from './SearchBooks';
 class BooksApp extends React.Component {
   
   state = {
+    books: [],
     bookshelves: [
-      { id: 'currentlyReading', title: 'Currently Reading', books: [] },
-      { id: 'wantToRead', title: 'Want to Read', books: []},
-      { id: 'read', title: 'Read', books: [] }
+      { id: 'currentlyReading', title: 'Currently Reading' },
+      { id: 'wantToRead', title: 'Want to Read'},
+      { id: 'read', title: 'Read' }
     ]
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then( (books) => {
-      let bookshelves = this.state.bookshelves;
-      bookshelves.forEach( shelf => {
-        shelf.books = books.filter( book => book.shelf === shelf.id)
-      })
-      this.setState({bookshelves: bookshelves});
-    })
+    BooksAPI.getAll().then( this.updateState )
+  }
+
+  updateState = ( books ) => {
+    this.setState({books: books});
   }
 
   updateShelf = (book, shelf) => {
+    this.setState( (state) => ({
+      books: state.books.map( b => {     
+        if( b.id === book.id && b.shelf !== shelf) {
+          b.shelf = shelf;
+        }
+        return b;
+      })
+    }))
     BooksAPI.update(book, shelf).then( (res) => {
-      console.log(res)
+      
+      console.log(res);
+      
     })
   }
 
@@ -46,8 +55,8 @@ class BooksApp extends React.Component {
         <Route exact path="/" render={() => (
           <ListBooks 
             bookshelves={this.state.bookshelves}
+            books={this.state.books}
             onUpdateShelf={this.updateShelf}
-            getShelfOptions={this.getShelfOptions}
           />
         )}/>
 
