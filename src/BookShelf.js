@@ -8,10 +8,10 @@ function BookShelf(props) {
     name: PropTypes.string.isRequired,
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    onUpdateBookShelf: PropTypes.func.isRequired
   }
 
-  const { books, name, onUpdateShelf, bookshelves } = props;
+  const { books, name, onUpdateBookShelf, bookshelves } = props;
 
   return (
     <div className="bookshelf">
@@ -22,7 +22,7 @@ function BookShelf(props) {
             <Book 
               key={book.id} 
               book={book} 
-              onUpdateBook={onUpdateShelf}
+              onUpdateBookShelf={onUpdateBookShelf}
               bookshelves={bookshelves}
             />
           ))}

@@ -9,12 +9,12 @@ export default class ListBooks extends Component {
   static propTypes = {
     bookshelves: PropTypes.array.isRequired,
     books: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    onUpdateBookShelf: PropTypes.func.isRequired
   }
 
   render() {
 
-    const { bookshelves, books, onUpdateShelf } = this.props;
+    const { bookshelves, books, onUpdateBookShelf } = this.props;
 
     return (
       <div className="list-books">
@@ -30,7 +30,7 @@ export default class ListBooks extends Component {
                   name={shelf.title}
                   bookshelves={bookshelves}
                   books={books.filter( book => book.shelf === shelf.id)}
-                  onUpdateShelf={onUpdateShelf}
+                  onUpdateBookShelf={onUpdateBookShelf}
                 />
               ))}
             </div>
