@@ -12,12 +12,18 @@ class BooksApp extends React.Component {
     books: []
   }
 
+  componentDidMount() {
+    BooksAPI.getAll().then( (books) => {
+      this.setState({ books })
+    })
+  }
+
   render() {
     return (
       <div className="app">
 
         <Route exact path="/" render={() => (
-          <BookShelf />
+          <BookShelf books={this.state.books}/>
         )}/>
 
         <Route path="/search" render={({history}) => (
