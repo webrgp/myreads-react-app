@@ -5,7 +5,7 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 
 import ListBooks from './ListBooks';
-import BookSearch from './BookSearch';
+import SearchBooks from './SearchBooks';
 
 class BooksApp extends React.Component {
   
@@ -37,7 +37,7 @@ class BooksApp extends React.Component {
         )}/>
 
         <Route path="/search" render={({history}) => (
-            <BookSearch />
+            <SearchBooks />
           )}
         />
       </div>

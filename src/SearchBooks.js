@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-export default class BookSearch extends Component {
+export default class SearchBooks extends Component {
   render () {
     return (
       <div className="search-books">
