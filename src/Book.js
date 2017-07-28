@@ -5,6 +5,7 @@ import { GridTile } from 'material-ui/GridList';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
+import Subheader from 'material-ui/Subheader';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 function Book(props) {
@@ -32,24 +33,22 @@ function Book(props) {
       value={book.shelf}
       onChange={ (event, value) => onUpdateBookShelf(book, value)}
     >
-      <MenuItem primaryText="Move to..." />
+      <Subheader>Move to...</Subheader>
       {bookshelves.map( option => (
         <MenuItem key={option.id} value={option.id} primaryText={option.title} />
       ))}
-      <MenuItem primaryText="None" />
+      <MenuItem value='none' primaryText="None" />
     </IconMenu>
   )
 
   return (
     <GridTile
       title={book.title}
-      subtitle={book.authors && book.authors.length && book.authors.map( (author, index, array) => (
-        <span key={index}>{author}</span>
-      ))}
+      subtitle={book.authors && book.authors.length && book.authors.join(', ')}
       actionIcon={actionIcon}
       style={styles.root}
     >
-      <img src={book.imageLinks.thumbnail} style={{ width: 128, height: 193 }}/>
+      <img src={book.imageLinks.thumbnail} style={{ width: '100%' }} alt={book.title}/>
     </GridTile>
   );
 }
