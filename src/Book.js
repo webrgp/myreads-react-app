@@ -27,7 +27,7 @@ function Book(props) {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        {book.authors.length && (
+        {book.authors && book.authors.length && (
           <div className="book-authors">
             {book.authors.map( (author, index, array) => (
               <span key={index}>{author}</span>

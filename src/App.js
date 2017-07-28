@@ -15,11 +15,9 @@ export default class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then( this.updateState )
-  }
-
-  updateState = ( books ) => {
-    this.setState({books: books});
+    BooksAPI.getAll().then( books => {
+      this.setState({books: books});
+    })
   }
 
   updateBookShelf = (book, shelf) => {
@@ -95,10 +93,9 @@ export default class BooksApp extends React.Component {
 
         <Route path="/search" render={({history}) => (
             <SearchBooks 
-              bookshelves={this.state.bookshelves}
+              books={books}
+              bookshelves={bookshelves}
               onUpdateBookShelf={this.updateBookShelf}
-              searchedBooks={this.state.searchedBooks}
-              onBookSearch={this.searchBooks}
             />
           )}
         />
