@@ -55,17 +55,37 @@ export default class BooksApp extends React.Component {
     });
   }
 
-  searchBooks = (query) => {
-    BooksAPI.search(query, 12).then(books => {
-      console.log(books);
-      
-      if( Array.isArray(books) ) {
-        this.setState({searchResuts: books});
-      } else {
-        this.setState({searchResuts: []});
-      }
-      
-    })
+  updateQuery = (query) => {
+
+    this.setState({ query });
+     
+    // do not send an API request if query is empty
+    if (query.trim().length > 0) {
+      BooksAPI.search(query).then(response => {
+        let searchResuts = [];
+
+        // Check if is Array
+        if (Array.isArray(response)) {
+          
+          // Sanitize searchResuts
+          response.forEach((r, index, arr) => {
+            arr[index].shelf = 'none';
+          });
+
+          this.state.books.forEach(b => {
+            response.forEach((r, index, arr) => {
+              if (r.id === b.id) {
+                arr[index].shelf = b.shelf;
+              }
+            })
+          });
+          searchResuts = response;
+        }
+        this.setState({ searchResuts });
+      })
+    } else {
+      this.setState({ searchResuts: [] });
+    }
   }
 
   getShelfOptions = () => {
@@ -129,8 +149,7 @@ export default class BooksApp extends React.Component {
         <Route path="/search" render={({history}) => (
             <SearchBooks 
               books={books}
-              bookshelves={bookshelves}
-              onSearchBooks={this.searchBooks}
+              onSearchBooks={this.updateQuery}
             >
               <BookList>
                 {this.state.searchResuts.map( book => (
