@@ -15,7 +15,8 @@ export default class BooksApp extends React.Component {
   
   state = {
     books: [],
-    searchedBooks: []
+    query: '',
+    searchResuts: []
   }
 
   componentDidMount() {
@@ -59,9 +60,9 @@ export default class BooksApp extends React.Component {
       console.log(books);
       
       if( Array.isArray(books) ) {
-        this.setState({searchedBooks: books});
+        this.setState({searchResuts: books});
       } else {
-        this.setState({searchedBooks: []});
+        this.setState({searchResuts: []});
       }
       
     })
@@ -105,7 +106,7 @@ export default class BooksApp extends React.Component {
                 key={shelf.id} 
                 name={shelf.title}
               >
-                <BookList>
+                <BookList noBooksMsg='Add a book to this shelf!'>
                   {books.filter( book => book.shelf === shelf.id).map( book => (
                     <Book 
                       key={book.id} 
@@ -129,10 +130,10 @@ export default class BooksApp extends React.Component {
             <SearchBooks 
               books={books}
               bookshelves={bookshelves}
-              onUpdateBookShelf={this.updateBookShelf}
+              onSearchBooks={this.searchBooks}
             >
               <BookList>
-                {this.state.searchedBooks.map( book => (
+                {this.state.searchResuts.map( book => (
                   <Book 
                     key={book.id} 
                     book={book} 
