@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Book from './Book';
+import BookList from './BookList';
 
 export default class SearchBooks extends Component {
   
@@ -34,16 +34,10 @@ export default class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid">
-            {searchedBooks.map( book => (
-              <Book 
-                key={book.id} 
-                book={book} 
-                onUpdateBookShelf={onUpdateBookShelf}
-                bookshelves={bookshelves}
-              />
-            ))}
-          </ol>
+          <BookList 
+            books={searchedBooks}
+            onUpdateBookShelf={onUpdateBookShelf}
+            bookshelves={bookshelves} />
         </div>
       </div>
     );

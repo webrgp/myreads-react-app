@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Book from './Book';
+import BookList from './BookList';
 
 function BookShelf(props) {
 
@@ -17,16 +17,10 @@ function BookShelf(props) {
     <div className="bookshelf">
       <h2 className="bookshelf-title">{name}</h2>
       <div className="bookshelf-books">
-        <ol className="books-grid">
-          {books.map( book => (
-            <Book 
-              key={book.id} 
-              book={book} 
-              onUpdateBookShelf={onUpdateBookShelf}
-              bookshelves={bookshelves}
-            />
-          ))}
-        </ol>
+        <BookList 
+          books={books}
+          onUpdateBookShelf={onUpdateBookShelf}
+          bookshelves={bookshelves} />
       </div>
     </div>
   );

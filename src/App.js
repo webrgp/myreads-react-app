@@ -11,12 +11,7 @@ export default class BooksApp extends React.Component {
   
   state = {
     books: [],
-    searchedBooks: [],
-    bookshelves: [
-      { id: 'currentlyReading', title: 'Currently Reading' },
-      { id: 'wantToRead', title: 'Want to Read'},
-      { id: 'read', title: 'Read' }
-    ]
+    searchedBooks: []
   }
 
   componentDidMount() {
@@ -61,7 +56,13 @@ export default class BooksApp extends React.Component {
 
   render() {
 
-    const { bookshelves, books } = this.state;
+    const { books } = this.state;
+
+    const bookshelves = [
+      { id: 'currentlyReading', title: 'Currently Reading' },
+      { id: 'wantToRead', title: 'Want to Read'},
+      { id: 'read', title: 'Read' }
+    ];
 
     return (
       <div className="app">
