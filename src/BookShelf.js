@@ -1,29 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BookList from './BookList';
 
-function BookShelf(props) {
+import Paper from 'material-ui/Paper';
 
-  BookShelf.propTypes = {
-    name: PropTypes.string.isRequired,
-    books: PropTypes.array.isRequired,
-    bookshelves: PropTypes.array.isRequired,
-    onUpdateBookShelf: PropTypes.func.isRequired
+export default class BookShelf extends React.Component {
+
+  static propTypes = {
+    name: PropTypes.string.isRequired
   }
 
-  const { books, name, onUpdateBookShelf, bookshelves } = props;
+  render() {
+    const { name, children } = this.props;
 
-  return (
-    <div className="bookshelf">
-      <h2 className="bookshelf-title">{name}</h2>
-      <div className="bookshelf-books">
-        <BookList 
-          books={books}
-          onUpdateBookShelf={onUpdateBookShelf}
-          bookshelves={bookshelves} />
-      </div>
-    </div>
-  );
+    const styles = {
+      root: {
+        padding: '10px 15px',
+        margin: 10
+      }
+    };
+
+    return (
+      <Paper
+        zDepth={0}
+        style={styles.root}>
+        <h2>{name}</h2>
+        {children}
+      </Paper>
+    );
+  }
 }
-
-export default BookShelf

@@ -1,10 +1,14 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+
+import AppBar from 'material-ui/AppBar';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import * as BooksAPI from './BooksAPI';
-import './App.css';
-
 import BookShelf from './BookShelf';
+import BookList from './BookList';
+import Book from './Book';
 import SearchBooks from './SearchBooks';
 
 export default class BooksApp extends React.Component {
@@ -21,7 +25,8 @@ export default class BooksApp extends React.Component {
   }
 
   updateBookShelf = (book, shelf) => {
-
+    console.log(shelf);
+    
     BooksAPI.update(book, shelf).then(data => {
       this.setState(({ books }) => {
         
@@ -78,32 +83,45 @@ export default class BooksApp extends React.Component {
       { id: 'read', title: 'Read' }
     ];
 
+    const fabStyle = {
+      margin: 0,
+      top: 'auto',
+      right: 20,
+      bottom: 20,
+      left: 'auto',
+      position: 'fixed',
+    };
+
     return (
       <div className="app">
-
-        <Route exact path="/" render={() => (
+        <Route exact path="/" render={({history}) => (
           <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <div>
-                  {bookshelves.map( ( shelf ) => (
-                    <BookShelf 
-                      key={shelf.id} 
-                      name={shelf.title}
-                      bookshelves={bookshelves}
-                      books={books.filter( book => book.shelf === shelf.id)}
+            <AppBar 
+              title="MyReads"
+              showMenuIconButton={false}
+            />
+            {bookshelves.map( ( shelf ) => (
+              <BookShelf 
+                key={shelf.id} 
+                name={shelf.title}
+              >
+                <BookList>
+                  {books.filter( book => book.shelf === shelf.id).map( book => (
+                    <Book 
+                      key={book.id} 
+                      book={book} 
                       onUpdateBookShelf={this.updateBookShelf}
+                      bookshelves={bookshelves}
                     />
                   ))}
-                </div>
-              </div>
-            </div>
-            <div className="open-search">
-              <Link to="/search">Add a book</Link>
-            </div>
+                </BookList>
+              </BookShelf>
+            ))}
+            <FloatingActionButton 
+              secondary={true} 
+              style={fabStyle}
+              onTouchTap={() => { history.push('/search') }}
+            ><ContentAdd /></FloatingActionButton>
           </div>
         )}/>
 
@@ -112,7 +130,18 @@ export default class BooksApp extends React.Component {
               books={books}
               bookshelves={bookshelves}
               onUpdateBookShelf={this.updateBookShelf}
-            />
+            >
+              <BookList>
+                {this.state.searchedBooks.map( book => (
+                  <Book 
+                    key={book.id} 
+                    book={book} 
+                    onUpdateBookShelf={this.updateBookShelf}
+                    bookshelves={bookshelves}
+                  />
+                ))}
+              </BookList>
+            </SearchBooks>
           )}
         />
       </div>

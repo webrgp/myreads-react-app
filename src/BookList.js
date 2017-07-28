@@ -1,29 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Book from './Book';
+import {GridList} from 'material-ui/GridList';
 
 function BookList(props) {
-  BookList.propTypes = {
-    books: PropTypes.array.isRequired,
-    bookshelves: PropTypes.array.isRequired,
-    onUpdateBookShelf: PropTypes.func.isRequired
-  }
 
-  const { books, onUpdateBookShelf, bookshelves } = props;
+  const { children } = props;
+
+  const styles = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+  };
 
   return (
-    <ol className="books-grid">
-      {books.map( book => (
-        <Book 
-          key={book.id} 
-          book={book} 
-          onUpdateBookShelf={onUpdateBookShelf}
-          bookshelves={bookshelves}
-        />
-      ))}
-    </ol>
+    <GridList 
+      cellHeight='auto'
+      cols={0}
+      padding={10}
+      style={styles}>
+      {children}
+    </GridList>
   );
 
 }
-
 export default BookList;
