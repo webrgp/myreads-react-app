@@ -1,38 +1,43 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import BookList from './BookList';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import TextField from 'material-ui/TextField';
 
-export default class SearchBooks extends Component {
+function SearchBooks(props) {
   
-  static propTypes = {
+  SearchBooks.propTypes = {
     books: PropTypes.array.isRequired,
     onSearchBooks: PropTypes.func.isRequired
   }
 
-  render () {
+  const { children, onSearchBooks, onCancelSearch } = props;
 
-    const { children, onSearchBooks } = this.props;
+  const backButton = (
+    <IconButton onTouchTap={onCancelSearch}><NavigationArrowBack /></IconButton>
+  )
 
-    return (
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link className="close-search" to="/">Close</Link>
-          <div className="search-books-input-wrapper">
+  const searchField = (
+    <TextField 
+      hintText="Search by title or author" 
+      onChange={(event) => onSearchBooks(event.target.value)}
+    />
+  )
 
-            <input 
-              type="text" 
-              placeholder="Search by title or author"
-              onChange={(event) => onSearchBooks(event.target.value)}
-            />
-            
-          </div>
-        </div>
-        <div className="search-books-results">
-          {children}
-        </div>
+  return (
+    <div className="search-books">
+      <AppBar
+        title={searchField}
+        iconElementLeft={backButton}
+      />
+
+      <div style={ { padding: 10 } }>
+        {children}
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+export default SearchBooks

@@ -11,6 +11,10 @@ import BookList from './BookList';
 import Book from './Book';
 import SearchBooks from './SearchBooks';
 
+import CheckCircle from 'material-ui/svg-icons/action/check-circle';
+import WatchLater from 'material-ui/svg-icons/action/watch-later';
+import LocalLibrary from 'material-ui/svg-icons/maps/local-library';
+
 export default class BooksApp extends React.Component {
   
   state = {
@@ -99,9 +103,9 @@ export default class BooksApp extends React.Component {
     const { books } = this.state;
 
     const bookshelves = [
-      { id: 'currentlyReading', title: 'Currently Reading' },
-      { id: 'wantToRead', title: 'Want to Read'},
-      { id: 'read', title: 'Read' }
+      { id: 'currentlyReading', title: 'Currently Reading', icon: <LocalLibrary /> },
+      { id: 'wantToRead', title: 'Want to Read', icon: <WatchLater />},
+      { id: 'read', title: 'Read', icon: <CheckCircle />}
     ];
 
     const fabStyle = {
@@ -125,6 +129,7 @@ export default class BooksApp extends React.Component {
               <BookShelf 
                 key={shelf.id} 
                 name={shelf.title}
+                icon={shelf.icon}
               >
                 <BookList noBooksMsg='Add a book to this shelf!'>
                   {books.filter( book => book.shelf === shelf.id).map( book => (
@@ -149,6 +154,7 @@ export default class BooksApp extends React.Component {
         <Route path="/search" render={({history}) => (
             <SearchBooks 
               books={books}
+              onCancelSearch={() => { history.push('/') }}
               onSearchBooks={this.updateQuery}
             >
               <BookList>
@@ -158,6 +164,7 @@ export default class BooksApp extends React.Component {
                     book={book} 
                     onUpdateBookShelf={this.updateBookShelf}
                     bookshelves={bookshelves}
+                    showBadge={true}
                   />
                 ))}
               </BookList>

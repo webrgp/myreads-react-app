@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+
 import Paper from 'material-ui/Paper';
+import IconButton from 'material-ui/IconButton';
 
 export default class BookShelf extends React.Component {
 
@@ -10,20 +13,18 @@ export default class BookShelf extends React.Component {
   }
 
   render() {
-    const { name, children } = this.props;
 
-    const styles = {
-      root: {
-        padding: '10px 15px',
-        margin: 10
-      }
-    };
+    const { name, children, icon } = this.props;
 
     return (
       <Paper
-        zDepth={0}
-        style={styles.root}>
-        <h2>{name}</h2>
+        zDepth={1}>
+        <Toolbar>
+          <ToolbarGroup firstChild={true}>
+            <IconButton>{icon}</IconButton>
+            <ToolbarTitle text={name} />
+          </ToolbarGroup>
+        </Toolbar>
         {children}
       </Paper>
     );

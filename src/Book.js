@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Badge from 'material-ui/Badge';
 
 function Book(props) {
 
@@ -17,6 +18,8 @@ function Book(props) {
   }
     
   const { book, bookshelves, onUpdateBookShelf } = props;
+
+  const showBadge = props.showBadge || false;
 
   const styles = {
     root: {
@@ -42,14 +45,21 @@ function Book(props) {
   )
 
   return (
-    <GridTile
-      title={book.title}
-      subtitle={book.authors && book.authors.length && book.authors.join(', ')}
-      actionIcon={actionIcon}
-      style={styles.root}
+    <Badge
+      badgeContent={showBadge && (
+        <IconButton tooltip={book.shelf}>
+        </IconButton>
+      )}
     >
-      <img src={book.imageLinks.thumbnail} style={{ width: '100%' }} alt={book.title}/>
-    </GridTile>
+      <GridTile
+        title={book.title}
+        subtitle={book.authors && book.authors.length && book.authors.join(', ')}
+        actionIcon={actionIcon}
+        style={styles.root}
+      >
+        <img src={book.imageLinks.thumbnail} style={{ width: '100%' }} alt={book.title}/>
+      </GridTile>
+    </Badge>
   );
 }
 
