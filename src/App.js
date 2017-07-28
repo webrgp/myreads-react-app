@@ -21,16 +21,32 @@ export default class BooksApp extends React.Component {
   }
 
   updateBookShelf = (book, shelf) => {
-    this.setState( (state) => ({
-      books: state.books.map( b => {     
-        if( b.id === book.id && b.shelf !== shelf) {
-          b.shelf = shelf;
-        }
-        return b;
-      })
-    }))
 
-    BooksAPI.update(book, shelf)
+    BooksAPI.update(book, shelf).then(data => {
+      this.setState(({ books }) => {
+        
+        // Check if book already in a shelf
+        const isInShelf = books.find(b => (
+          b.id === book.id
+        ));
+
+        // in shelf
+        if (!! isInShelf) {
+          return {
+            books: books.filter(b =>
+              b.id === book.id ? b.shelf = shelf : b
+            )
+          };
+        }
+
+        // put book in shelf
+        return {
+          books: books.concat(
+            Object.assign({}, book, { shelf: shelf })
+          )
+        }
+      });
+    });
   }
 
   searchBooks = (query) => {
