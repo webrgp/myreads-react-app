@@ -1,29 +1,27 @@
 import React from 'react';
 import {GridList} from 'material-ui/GridList';
+import './BookList.css';
 
 function BookList(props) {
 
   const { children, noBooksMsg } = props;
-
-  const styles = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-  };
   
   const gridList = (
-    <GridList 
-      cellHeight='auto'
-      cols={0}
-      padding={10}
-      style={styles}>
-      {children}
-    </GridList>
+    <div className='book-list'>
+      <GridList
+        className='book-list-grid'
+        cellHeight='auto'
+        cols={0}
+        padding={10}
+      >
+        {children}
+      </GridList>
+    </div>
   );
 
   const noBooks = (
-    <div>
-      <em>{noBooksMsg === undefined ? 'No books' : noBooksMsg}</em>
+    <div className='book-list-is-empty'>
+      {noBooksMsg === undefined ? 'No books' : noBooksMsg}
     </div>
   );
   

@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import {Card, CardActions, CardHeader} from 'material-ui/Card';
+import Avatar from 'material-ui/Avatar';
 
-import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
+import {
+  green600,
+  green50
+} from 'material-ui/styles/colors';
 
 export default class BookShelf extends React.Component {
 
@@ -16,17 +19,31 @@ export default class BookShelf extends React.Component {
 
     const { name, children, icon } = this.props;
 
+    const styles = {
+      cardHeader: {
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: green50
+      },
+      cardHeaderTitle: {
+        fontSize: 20
+      },
+      cardHeaderSubtitle: {
+        display: 'none'
+      }
+    };
+
     return (
-      <Paper
-        zDepth={1}>
-        <Toolbar>
-          <ToolbarGroup firstChild={true}>
-            <IconButton>{icon}</IconButton>
-            <ToolbarTitle text={name} />
-          </ToolbarGroup>
-        </Toolbar>
+      <Card>
+        <CardHeader
+          title={name}
+          titleStyle={ styles.cardHeaderTitle }
+          subtitleStyle={ styles.cardHeaderSubtitle }
+          avatar={<Avatar backgroundColor={green600} icon={icon} />}
+          style={ styles.cardHeader }
+        />
         {children}
-      </Paper>
+      </Card>
     );
   }
 }

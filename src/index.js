@@ -8,6 +8,8 @@ import styles from './styles.json'
 
 import App from './App'
 
+import './index.css'
+
 const muiTheme = getMuiTheme(styles);
 
 // Needed for onTouchTap

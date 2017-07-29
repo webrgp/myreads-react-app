@@ -3,6 +3,10 @@ import { Route } from 'react-router-dom';
 
 import AppBar from 'material-ui/AppBar';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+
+import CheckCircle from 'material-ui/svg-icons/action/check-circle';
+import WatchLater from 'material-ui/svg-icons/action/watch-later';
+import LocalLibrary from 'material-ui/svg-icons/maps/local-library';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import * as BooksAPI from './BooksAPI';
@@ -11,9 +15,7 @@ import BookList from './BookList';
 import Book from './Book';
 import SearchBooks from './SearchBooks';
 
-import CheckCircle from 'material-ui/svg-icons/action/check-circle';
-import WatchLater from 'material-ui/svg-icons/action/watch-later';
-import LocalLibrary from 'material-ui/svg-icons/maps/local-library';
+
 
 export default class BooksApp extends React.Component {
   
@@ -151,7 +153,7 @@ export default class BooksApp extends React.Component {
           </div>
         )}/>
 
-        <Route path="/search" render={({history}) => (
+        <Route path="/search" onEnter={() => { this.setState({ searchResuts: [] }) }} render={({history}) => (
             <SearchBooks 
               books={books}
               onCancelSearch={() => { history.push('/') }}
