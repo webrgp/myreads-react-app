@@ -1,22 +1,14 @@
 import React from 'react';
-import {GridList} from 'material-ui/GridList';
-import './BookList.css';
+import Grid from 'material-ui/Grid';
 
 function BookList(props) {
 
   const { children, noBooksMsg } = props;
   
   const gridList = (
-    <div className='book-list'>
-      <GridList
-        className='book-list-grid'
-        cellHeight='auto'
-        cols={0}
-        padding={10}
-      >
-        {children}
-      </GridList>
-    </div>
+    <Grid container justify="center" gutter={16}>
+      {children}
+    </Grid>
   );
 
   const noBooks = (

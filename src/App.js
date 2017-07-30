@@ -2,12 +2,13 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import AppBar from 'material-ui/AppBar';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-
-import CheckCircle from 'material-ui/svg-icons/action/check-circle';
-import WatchLater from 'material-ui/svg-icons/action/watch-later';
-import LocalLibrary from 'material-ui/svg-icons/maps/local-library';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import CheckCircle from 'material-ui-icons/CheckCircle';
+import WatchLater from 'material-ui-icons/WatchLater';
+import LocalLibrary from 'material-ui-icons/LocalLibrary';
+import ContentAdd from 'material-ui-icons/Add';
 
 import * as BooksAPI from './BooksAPI';
 import BookShelf from './BookShelf';
@@ -123,10 +124,13 @@ export default class BooksApp extends React.Component {
       <div className="app">
         <Route exact path="/" render={({history}) => (
           <div className="list-books">
-            <AppBar 
-              title="MyReads"
-              showMenuIconButton={false}
-            />
+            <AppBar position="static">
+              <Toolbar>
+                <Typography type="title" color="inherit" style={{ color: '#fff' }}>
+                  MyReads
+                </Typography>
+              </Toolbar>
+            </AppBar>
             {bookshelves.map( ( shelf ) => (
               <BookShelf 
                 key={shelf.id} 
@@ -145,32 +149,32 @@ export default class BooksApp extends React.Component {
                 </BookList>
               </BookShelf>
             ))}
-            <FloatingActionButton 
-              secondary={true} 
+            <Button fab  
+              color="accent"
               style={fabStyle}
-              onTouchTap={() => { history.push('/search') }}
-            ><ContentAdd /></FloatingActionButton>
+              onClick={() => { history.push('/search') }}
+            ><ContentAdd /></Button>
           </div>
         )}/>
 
         <Route path="/search" onEnter={() => { this.setState({ searchResuts: [] }) }} render={({history}) => (
-            <SearchBooks 
-              books={books}
-              onCancelSearch={() => { history.push('/') }}
-              onSearchBooks={this.updateQuery}
-            >
-              <BookList>
-                {this.state.searchResuts.map( book => (
-                  <Book 
-                    key={book.id} 
-                    book={book} 
-                    onUpdateBookShelf={this.updateBookShelf}
-                    bookshelves={bookshelves}
-                    showBadge={true}
-                  />
-                ))}
-              </BookList>
-            </SearchBooks>
+          <SearchBooks 
+            books={books}
+            onCancelSearch={() => { history.push('/') }}
+            onSearchBooks={this.updateQuery}
+          >
+            <BookList>
+              {this.state.searchResuts.map( book => (
+                <Book 
+                  key={book.id} 
+                  book={book} 
+                  onUpdateBookShelf={this.updateBookShelf}
+                  bookshelves={bookshelves}
+                  showBadge={true}
+                />
+              ))}
+            </BookList>
+          </SearchBooks>
           )}
         />
       </div>
