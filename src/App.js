@@ -1,20 +1,16 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import CheckCircle from 'material-ui-icons/CheckCircle';
 import WatchLater from 'material-ui-icons/WatchLater';
 import LocalLibrary from 'material-ui-icons/LocalLibrary';
-import ContentAdd from 'material-ui-icons/Add';
 import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
 
 import * as BooksAPI from './BooksAPI';
 import BookShelf from './components/BookShelf';
 import BookList from './components/BookList';
 import Book from './components/Book';
+import ListBooks from './components/ListBooks';
 import SearchBooks from './components/SearchBooks';
 
 
@@ -113,26 +109,10 @@ export default class BooksApp extends React.Component {
       { id: 'none', title: 'None', icon: <ArrowDropDown />}
     ];
 
-    const fabStyle = {
-      margin: 0,
-      top: 'auto',
-      right: 20,
-      bottom: 20,
-      left: 'auto',
-      position: 'fixed',
-    };
-
     return (
       <div className="app">
         <Route exact path="/" render={({history}) => (
-          <div className="list-books">
-            <AppBar position="static">
-              <Toolbar>
-                <Typography type="title" color="inherit" style={{ color: '#fff' }}>
-                  MyReads
-                </Typography>
-              </Toolbar>
-            </AppBar>
+          <ListBooks>
             {/* display all shelves except the last one ('none') */}
             {bookshelves.filter( (s, i, arr) => ( i !== arr.length-1) ).map( ( shelf ) => (
               <BookShelf 
@@ -156,12 +136,7 @@ export default class BooksApp extends React.Component {
                 </BookList>
               </BookShelf>
             ))}
-            <Button fab  
-              color="accent"
-              style={fabStyle}
-              onClick={() => { history.push('/search') }}
-            ><ContentAdd /></Button>
-          </div>
+          </ListBooks>
         )}/>
 
         <Route path="/search" onEnter={() => { this.setState({ searchResuts: [] }) }} render={({history}) => (
