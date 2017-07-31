@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
 import Card, { CardContent } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
@@ -34,8 +35,6 @@ const styleSheet = createStyleSheet(theme => ({
     }
   }
 }));
-
-import Grid from 'material-ui/Grid';
 
 class BookShelf extends React.Component {
 
