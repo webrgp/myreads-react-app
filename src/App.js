@@ -12,10 +12,10 @@ import ContentAdd from 'material-ui-icons/Add';
 import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
 
 import * as BooksAPI from './BooksAPI';
-import BookShelf from './BookShelf';
-import BookList from './BookList';
-import Book from './Book';
-import SearchBooks from './SearchBooks';
+import BookShelf from './components/BookShelf';
+import BookList from './components/BookList';
+import Book from './components/Book';
+import SearchBooks from './components/SearchBooks';
 
 
 
