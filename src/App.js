@@ -18,6 +18,12 @@ import SearchBooks from './components/SearchBooks';
 export default class BooksApp extends React.Component {
   
   state = {
+    bookshelves: [
+      { id: 'currentlyReading', title: 'Currently Reading', icon: <LocalLibrary />, color: '#A7FFEB'},
+      { id: 'wantToRead', title: 'Want to Read', icon: <WatchLater />, color: '#F0F4C3'},
+      { id: 'read', title: 'Read', icon: <CheckCircle />, color: '#DCEDC8'},
+      { id: 'none', title: 'None', icon: <ArrowDropDown />, color: false}
+    ],
     books: [],
     query: '',
     searchResuts: []
@@ -30,8 +36,6 @@ export default class BooksApp extends React.Component {
   }
 
   updateBookShelf = (book, shelf) => {
-    // console.log(shelf);
-    
     BooksAPI.update(book, shelf).then(data => {
       this.setState(({ books, searchResuts }) => {
         
@@ -42,19 +46,11 @@ export default class BooksApp extends React.Component {
 
         // in shelf
         if (!! isInShelf) {
-          return {
-            books: books.filter(b =>
-              b.id === book.id ? b.shelf = shelf : b
-            )
-          };
+          return {books: books.filter(b => b.id === book.id ? b.shelf = shelf : b)};
         }
 
         // put book in shelf
-        return {
-          books: books.concat(
-            Object.assign({}, book, { shelf: shelf })
-          )
-        }
+        return {books: books.concat(Object.assign({}, book, { shelf: shelf }))}
       });
     });
   }
@@ -92,22 +88,9 @@ export default class BooksApp extends React.Component {
     }
   }
 
-  getShelfOptions = () => {
-    return this.state.bookshelves.map( shelf => (
-      { id: shelf.id, title: shelf.title }
-    ))
-  }
-
   render() {
 
-    const { books } = this.state;
-
-    const bookshelves = [
-      { id: 'currentlyReading', title: 'Currently Reading', icon: <LocalLibrary /> },
-      { id: 'wantToRead', title: 'Want to Read', icon: <WatchLater />},
-      { id: 'read', title: 'Read', icon: <CheckCircle />},
-      { id: 'none', title: 'None', icon: <ArrowDropDown />}
-    ];
+    const { bookshelves, books, searchResuts } = this.state;
 
     return (
       <div className="app">
@@ -144,7 +127,7 @@ export default class BooksApp extends React.Component {
             onSearchBooks={this.updateQuery}
           >
             <BookList>
-              {this.state.searchResuts.map( book => (
+              {searchResuts.map( book => (
                 <Book 
                   key={book.id} 
                   book={book} 
