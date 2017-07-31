@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Menu, { MenuItem } from 'material-ui/Menu'
-import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
 // import Subheader from 'material-ui/Subheader';
-import MoreVert from 'material-ui-icons/MoreVert';
+import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
 
 export default class BookSelectMenu extends Component {
 
@@ -14,15 +14,20 @@ export default class BookSelectMenu extends Component {
   state = {
     anchorEl: undefined,
     open: false,
-    selectedIndex: 1,
+    selectedShelf: false,
   };
+
+  componentWillMount() {
+    this.setState({ selectedShelf: this.props.selectedShelf, open: false });
+  }
 
   handleClick = event => {
     this.setState({ open: true, anchorEl: event.currentTarget });
   };
 
-  handleMenuItemClick = (event, shelf, index) => {
-    this.setState({ selectedIndex: index, open: false });
+  handleMenuItemClick = (event, shelf) => {
+    this.setState({ selectedShelf: shelf, open: false });
+    this.props.onChange(event, shelf.id);
   };
 
   handleRequestClose = () => {
@@ -33,27 +38,46 @@ export default class BookSelectMenu extends Component {
 
     const {options} = this.props;
 
+    const styles = {
+      wrapper: {
+        position: 'absolute',
+        right: 0,
+        top: -7
+      },
+      fab: {
+        width: 36,
+        height: 36,
+        color: '#fff'
+      }
+    }
+
     return (
-      <div>
-        <IconButton aria-label="Add to shelf" onClick={this.handleClick}>
-          <MoreVert />
-        </IconButton>
+      <div style={styles.wrapper}>
+        <Button 
+          fab
+          color="primary" 
+          dense={true} 
+          aria-label="Add to shelf" 
+          onClick={this.handleClick}
+          style={styles.fab}
+        >
+          <ArrowDropDown />
+        </Button>
         <Menu
           id="lock-menu"
           anchorEl={this.state.anchorEl}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
         >
-          {options.map((option, index) =>
+          {options.map((option) =>
             <MenuItem
               key={option.id}
-              selected={index === this.state.selectedIndex}
-              onClick={event => this.handleMenuItemClick(event, option.id, index)}
+              selected={this.state.selectedShelf && option.id === this.state.selectedShelf.id}
+              onClick={event => this.handleMenuItemClick(event, option)}
             >
               {option.title}
-            </MenuItem>,
+            </MenuItem>
           )}
-          <MenuItem onClick={event => this.handleMenuItemClick(event, 'none', options.length)}>None</MenuItem>
         </Menu>
       </div>
     );

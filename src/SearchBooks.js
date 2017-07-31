@@ -11,7 +11,13 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 
 const styleSheet = createStyleSheet('Inputs', theme => ({
   input: {
-    margin: theme.spacing.unit,
+    color: '#fff',
+    '&:before': {
+      backgroundColor: '#fff'
+    },
+    '&:after': {
+      backgroundColor: '#fff'
+    }
   },
 }));
 
@@ -19,29 +25,29 @@ function SearchBooks(props) {
   
   SearchBooks.propTypes = {
     books: PropTypes.array.isRequired,
-    onSearchBooks: PropTypes.func.isRequired
+    onSearchBooks: PropTypes.func.isRequired,
+    onCancelSearch: PropTypes.func.isRequired
   }
 
-  const { children, onSearchBooks, onCancelSearch, classes } = props;
+  const { onSearchBooks, onCancelSearch, classes, children } = props;
 
   return (
     <div className="search-books">
 
       <AppBar position="static">
         <Toolbar style={{paddingLeft: 0}}>
-          <IconButton onClick={onCancelSearch} color="contrast" aria-label="Back"><ArrowBack /></IconButton>
+          <IconButton onClick={onCancelSearch} style={{color:'#fff'}} aria-label="Back"><ArrowBack /></IconButton>
           <TextField
             fullWidth={true}
             id='search'
-            type='search'
             placeholder='Search by title or author'
-            className={classes.input}
+            InputClassName={classes.input}
             onChange={(event) => onSearchBooks(event.target.value)}
           />
         </Toolbar>
       </AppBar>
 
-      <div style={ { padding: 10 } }>
+      <div style={ { paddingTop: 30 } }>
         {children}
       </div>
     </div>

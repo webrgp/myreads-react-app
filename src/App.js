@@ -9,6 +9,7 @@ import CheckCircle from 'material-ui-icons/CheckCircle';
 import WatchLater from 'material-ui-icons/WatchLater';
 import LocalLibrary from 'material-ui-icons/LocalLibrary';
 import ContentAdd from 'material-ui-icons/Add';
+import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
 
 import * as BooksAPI from './BooksAPI';
 import BookShelf from './BookShelf';
@@ -33,10 +34,10 @@ export default class BooksApp extends React.Component {
   }
 
   updateBookShelf = (book, shelf) => {
-    console.log(shelf);
+    // console.log(shelf);
     
     BooksAPI.update(book, shelf).then(data => {
-      this.setState(({ books }) => {
+      this.setState(({ books, searchResuts }) => {
         
         // Check if book already in a shelf
         const isInShelf = books.find(b => (
@@ -108,7 +109,8 @@ export default class BooksApp extends React.Component {
     const bookshelves = [
       { id: 'currentlyReading', title: 'Currently Reading', icon: <LocalLibrary /> },
       { id: 'wantToRead', title: 'Want to Read', icon: <WatchLater />},
-      { id: 'read', title: 'Read', icon: <CheckCircle />}
+      { id: 'read', title: 'Read', icon: <CheckCircle />},
+      { id: 'none', title: 'None', icon: <ArrowDropDown />}
     ];
 
     const fabStyle = {
@@ -131,20 +133,25 @@ export default class BooksApp extends React.Component {
                 </Typography>
               </Toolbar>
             </AppBar>
-            {bookshelves.map( ( shelf ) => (
+            {/* display all shelves except the last one ('none') */}
+            {bookshelves.filter( (s, i, arr) => ( i !== arr.length-1) ).map( ( shelf ) => (
               <BookShelf 
                 key={shelf.id} 
                 name={shelf.title}
                 icon={shelf.icon}
               >
-                <BookList noBooksMsg='Add a book to this shelf!'>
+                <BookList 
+                  noBooksMsg='Add a book to this shelf!'
+                >
                   {books.filter( book => book.shelf === shelf.id).map( book => (
                     <Book 
                       key={book.id} 
                       book={book} 
                       onUpdateBookShelf={this.updateBookShelf}
                       bookshelves={bookshelves}
-                    />
+                    >
+                      <img src={book.imageLinks.thumbnail} alt={book.title} style={{ width: '100%' }}/>
+                    </Book>
                   ))}
                 </BookList>
               </BookShelf>
@@ -170,8 +177,9 @@ export default class BooksApp extends React.Component {
                   book={book} 
                   onUpdateBookShelf={this.updateBookShelf}
                   bookshelves={bookshelves}
-                  showBadge={true}
-                />
+                >
+                  <img src={book.imageLinks.thumbnail} alt={book.title} style={{ width: '100%', opacity: book.shelf === 'none' ? 1 : 0.5 }}/>
+                </Book>
               ))}
             </BookList>
           </SearchBooks>
