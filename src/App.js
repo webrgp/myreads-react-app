@@ -112,17 +112,15 @@ export default class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/" render={({history}) => (
-          <ListBooks>
+          <ListBooks onFabClick={() => { history.push('/search') }}>
             {/* display all shelves except the last one ('none') */}
             {bookshelves.filter( (s, i, arr) => ( i !== arr.length-1) ).map( ( shelf ) => (
               <BookShelf 
                 key={shelf.id} 
                 name={shelf.title}
-                icon={shelf.icon}
-              >
+                icon={shelf.icon}>
                 <BookList 
-                  noBooksMsg='Add a book to this shelf!'
-                >
+                  noBooksMsg='Add a book to this shelf!'>
                   {books.filter( book => book.shelf === shelf.id).map( book => (
                     <Book 
                       key={book.id} 
