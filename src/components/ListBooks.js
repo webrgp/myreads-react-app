@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -7,7 +8,12 @@ import ContentAdd from 'material-ui-icons/Add';
 
 function ListBooks(props) {
 
-  const { children } = props;
+  ListBooks.propTypes = {
+    onFabClick: PropTypes.func.isRequired,
+    children: PropTypes.array.isRequired
+  }
+
+  const { children, onFabClick } = props;
 
   const fabStyle = {
     margin: 0,
@@ -31,7 +37,7 @@ function ListBooks(props) {
       <Button fab  
         color="accent"
         style={fabStyle}
-        onClick={() => { history.push('/search') }}
+        onClick={onFabClick}
       ><ContentAdd /></Button>
     </div>
   );
