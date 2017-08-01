@@ -5,6 +5,7 @@ import Grid from 'material-ui/Grid';
 import Card, { CardContent } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
+import BookList from './BookList';
 
 const styleSheet = createStyleSheet(theme => ({
   cardContentHeader: {
@@ -41,23 +42,26 @@ class BookShelf extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     icon: PropTypes.element.isRequired,
-    children: PropTypes.element.isRequired
+    color: PropTypes.string.isRequired,
+    children: PropTypes.array.isRequired
   }
 
   render() {
 
-    const { name, children, icon, classes } = this.props;
+    const { name, color, icon, children, classes } = this.props;
 
     return (
       <Grid container gutter={0} className={classes.gridContainer}>
         <Grid item xs={12} sm={10} className={classes.gridItem}>
           <Card>
             <CardContent className={classes.cardContentHeader}>
-              <Avatar aria-label={name} className={classes.avatar}>{icon}</Avatar>
+              <Avatar aria-label={name} className={classes.avatar} style={{ backgroundColor: color }}>{icon}</Avatar>
               <Typography className={classes.typography} type='title'>{name}</Typography>
             </CardContent>          
             <CardContent>
+              <BookList noBooksMsg='Add a book to this shelf!'>
               {children}
+              </BookList>
             </CardContent>
           </Card>
         </Grid>

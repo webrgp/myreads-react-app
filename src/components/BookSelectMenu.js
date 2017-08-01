@@ -2,10 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Button from 'material-ui/Button';
-// import Subheader from 'material-ui/Subheader';
 import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
 
-export default class BookSelectMenu extends Component {
+const styleSheet = createStyleSheet(theme => ({
+  wrapper: {
+    position: 'absolute',
+    right: 0,
+    top: -7
+  },
+  fab: {
+    width: 36,
+    height: 36,
+    color: '#fff'
+  }
+}));
+
+class BookSelectMenu extends Component {
 
   static propTypes = {
     options: PropTypes.array.isRequired,
@@ -36,30 +49,18 @@ export default class BookSelectMenu extends Component {
 
   render () {
 
-    const {options} = this.props;
-
-    const styles = {
-      wrapper: {
-        position: 'absolute',
-        right: 0,
-        top: -7
-      },
-      fab: {
-        width: 36,
-        height: 36,
-        color: '#fff'
-      }
-    }
+    const {options, classes} = this.props;
 
     return (
-      <div style={styles.wrapper}>
+      <div className={classes.wrapper}>
         <Button 
           fab
           color="primary" 
           dense={true} 
           aria-label="Add to shelf" 
           onClick={this.handleClick}
-          style={styles.fab}
+          className={classes.fab}
+          style={ this.state.selectedShelf && this.state.selectedShelf.id !== 'none' ? { backgroundColor: this.state.selectedShelf.color } : {} }
         >
           <ArrowDropDown />
         </Button>
@@ -83,3 +84,5 @@ export default class BookSelectMenu extends Component {
     );
   }
 }
+
+export default withStyles(styleSheet)(BookSelectMenu)

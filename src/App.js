@@ -19,9 +19,9 @@ export default class BooksApp extends React.Component {
   
   state = {
     bookshelves: [
-      { id: 'currentlyReading', title: 'Currently Reading', icon: <LocalLibrary />, color: '#A7FFEB'},
-      { id: 'wantToRead', title: 'Want to Read', icon: <WatchLater />, color: '#F0F4C3'},
-      { id: 'read', title: 'Read', icon: <CheckCircle />, color: '#DCEDC8'},
+      { id: 'currentlyReading', title: 'Currently Reading', icon: <LocalLibrary />, color: '#039BE5'},
+      { id: 'wantToRead', title: 'Want to Read', icon: <WatchLater />, color: '#9575CD'},
+      { id: 'read', title: 'Read', icon: <CheckCircle />, color: '#A1887F'},
       { id: 'none', title: 'None', icon: <ArrowDropDown />, color: false}
     ],
     books: [],
@@ -101,20 +101,19 @@ export default class BooksApp extends React.Component {
               <BookShelf 
                 key={shelf.id} 
                 name={shelf.title}
-                icon={shelf.icon}>
-                <BookList 
-                  noBooksMsg='Add a book to this shelf!'>
-                  {books.filter( book => book.shelf === shelf.id).map( book => (
-                    <Book 
-                      key={book.id} 
-                      book={book} 
-                      onUpdateBookShelf={this.updateBookShelf}
-                      bookshelves={bookshelves}
-                    >
-                      <img src={book.imageLinks.thumbnail} alt={book.title} style={{ width: '100%' }}/>
-                    </Book>
-                  ))}
-                </BookList>
+                icon={shelf.icon}
+                color={shelf.color}>
+                
+                {books.filter( book => book.shelf === shelf.id).map( book => (
+                  <Book 
+                    key={book.id} 
+                    book={book} 
+                    onUpdateBookShelf={this.updateBookShelf}
+                    bookshelves={bookshelves}
+                  >
+                    <img src={book.imageLinks.thumbnail} alt={book.title} style={{ width: '100%' }}/>
+                  </Book>
+                ))}
               </BookShelf>
             ))}
           </ListBooks>
@@ -126,18 +125,16 @@ export default class BooksApp extends React.Component {
             onCancelSearch={() => { history.push('/') }}
             onSearchBooks={this.updateQuery}
           >
-            <BookList>
-              {searchResuts.map( book => (
-                <Book 
-                  key={book.id} 
-                  book={book} 
-                  onUpdateBookShelf={this.updateBookShelf}
-                  bookshelves={bookshelves}
-                >
-                  <img src={book.imageLinks.thumbnail} alt={book.title} style={{ width: '100%', opacity: book.shelf === 'none' ? 1 : 0.5 }}/>
-                </Book>
-              ))}
-            </BookList>
+            {searchResuts.map( book => (
+              <Book 
+                key={book.id} 
+                book={book} 
+                onUpdateBookShelf={this.updateBookShelf}
+                bookshelves={bookshelves}
+              >
+                <img src={book.imageLinks.thumbnail} alt={book.title} style={{ width: '100%', opacity: book.shelf === 'none' ? 1 : 0.5 }}/>
+              </Book>
+            ))}
           </SearchBooks>
           )}
         />
