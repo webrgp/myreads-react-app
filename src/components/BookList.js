@@ -1,12 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 
 function BookList(props) {
 
+  BookList.propTypes= {
+    children: PropTypes.array.isRequired,
+    noBooksMsg: PropTypes.string
+  }
+
   const { children, noBooksMsg } = props;
   
-  const gridList = (
+  return children.length ? (
     <Grid 
       container 
       justify='center'
@@ -15,15 +21,11 @@ function BookList(props) {
     >
       {children}
     </Grid>
-  );
-
-  const noBooks = (
+  ) : (
     <Typography style={{ textAlign: 'center', fontStyle: 'italic', color: '#bbb' }} type='body1'>
       {noBooksMsg === undefined ? '' : noBooksMsg}
     </Typography>
   );
-  
-  return children.length ? gridList : noBooks;
 
 }
 export default BookList;

@@ -36,8 +36,7 @@ const styleSheet = createStyleSheet(theme => ({
 function SearchBooks(props) {
   
   SearchBooks.propTypes = {
-    books: PropTypes.array.isRequired,
-    children: PropTypes.array.isRequired,
+    children: PropTypes.array,
     onSearchBooks: PropTypes.func.isRequired,
     onCancelSearch: PropTypes.func.isRequired
   }

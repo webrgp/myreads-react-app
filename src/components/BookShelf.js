@@ -42,7 +42,7 @@ class BookShelf extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     icon: PropTypes.element.isRequired,
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string,
     children: PropTypes.array.isRequired
   }
 
