@@ -5,7 +5,7 @@
 ## Getting Started
 
 ```shell
-$ git clone https://github.com/romarioraffington/react-myreads.git
+$ git clone https://github.com/webrgp/myreads-react-app.git
 $ yarn
 $ yarn start
 ```
