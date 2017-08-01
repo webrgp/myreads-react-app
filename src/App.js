@@ -37,7 +37,9 @@ export default class BooksApp extends React.Component {
   updateBookShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(data => {
       this.setState(({ books, searchResuts }) => {
-        
+
+        const results = searchResuts.filter(b => b.id === book.id ? b.shelf = shelf : b);
+
         // Check if book already in a shelf
         const isInShelf = books.find(b => (
           b.id === book.id
@@ -45,11 +47,17 @@ export default class BooksApp extends React.Component {
 
         // in shelf
         if (!! isInShelf) {
-          return {books: books.filter(b => b.id === book.id ? b.shelf = shelf : b)};
+          return {
+            books: books.filter(b => b.id === book.id ? b.shelf = shelf : b),
+            searchResuts: results
+          };
         }
 
         // put book in shelf
-        return {books: books.concat(Object.assign({}, book, { shelf: shelf }))}
+        return {
+          books: books.concat(Object.assign({}, book, { shelf: shelf })),
+          searchResuts: results
+        }
       });
     });
   }
@@ -94,7 +102,10 @@ export default class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/" render={({history}) => (
-          <ListBooks onFabClick={() => { history.push('/search') }}>
+          <ListBooks onFabClick={() => { 
+            this.setState({searchResuts: []})
+            history.push('/search') 
+          }}>
             {/* display all shelves except the last one ('none') */}
             {bookshelves.filter( (s, i, arr) => ( i !== arr.length-1) ).map( ( shelf ) => (
               <BookShelf 
@@ -109,9 +120,7 @@ export default class BooksApp extends React.Component {
                     book={book} 
                     onUpdateBookShelf={this.updateBookShelf}
                     bookshelves={bookshelves}
-                  >
-                    <img src={book.imageLinks.thumbnail} alt={book.title} style={{ width: '100%' }}/>
-                  </Book>
+                  />
                 ))}
               </BookShelf>
             ))}
@@ -130,9 +139,8 @@ export default class BooksApp extends React.Component {
                 book={book} 
                 onUpdateBookShelf={this.updateBookShelf}
                 bookshelves={bookshelves}
-              >
-                <img src={book.imageLinks.thumbnail} alt={book.title} style={{ width: '100%', opacity: book.shelf === 'none' ? 1 : 0.5 }}/>
-              </Book>
+                bookInShelf={book.shelf !== 'none'}
+              />
             ))}
           </SearchBooks>
           )}

@@ -11,9 +11,10 @@ function Book(props) {
     bookshelves: PropTypes.array.isRequired,
     onUpdateBookShelf: PropTypes.func.isRequired
   }
-    
-  const { book, bookshelves, onUpdateBookShelf, children } = props;
 
+    
+  const { book, bookshelves, onUpdateBookShelf, bookInShelf } = props;
+  
   const selectMenu = (
     <BookSelectMenu
       selectedShelf={bookshelves.filter( (shelf) => ( shelf.id === book.shelf))[0]}
@@ -24,10 +25,13 @@ function Book(props) {
 
   return (
     <Grid item style={{ width: 128, position: 'relative' }}>
-      
-      {/* Cover Images*/}
-      {children}
-
+      <img 
+        src={book.imageLinks.thumbnail} 
+        alt={book.title} 
+        style={{ 
+          width: '100%', 
+          opacity: bookInShelf === undefined ? 1 : bookInShelf ? 0.5 : 1
+        }}/>
       {selectMenu}
 
       <Typography type="body1" noWrap={true}>
