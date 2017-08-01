@@ -8,7 +8,6 @@ import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
 
 import * as BooksAPI from './BooksAPI';
 import BookShelf from './components/BookShelf';
-import BookList from './components/BookList';
 import Book from './components/Book';
 import ListBooks from './components/ListBooks';
 import SearchBooks from './components/SearchBooks';
@@ -103,7 +102,7 @@ export default class BooksApp extends React.Component {
                 name={shelf.title}
                 icon={shelf.icon}
                 color={shelf.color}>
-                
+
                 {books.filter( book => book.shelf === shelf.id).map( book => (
                   <Book 
                     key={book.id} 
