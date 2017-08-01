@@ -1,4 +1,4 @@
-# MyReads
+# MyReads React App
 
  MyReads is a bookshelf app that allows users to select and categorize books they have read, are currently reading, or want to read. Users can also search for books and add books to their bookshelf. The project is build using React and data is provided and persisted by the [Udacity](https://reactnd-books-api.udacity.com).
 
